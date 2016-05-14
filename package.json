@@ -1,0 +1,39 @@
+{
+  "name": "sia-api",
+  "description": "SIA REST API Wrapper",
+  "version": "0.1.2",
+  "author": {
+    "name": "ASPECTRON Inc.",
+    "email": "info@aspectron.com"
+  },
+  "dependencies": {
+    "underscore" : "*"
+  },
+  "keywords": [
+    "sia",
+    "siacoin",
+    "storage",
+    "distributed"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/megastor/sia-api"
+  },
+  "main": "sia-api",
+  "files": [
+    "sia-api.js",
+    "README.md"
+  ],
+  "scripts": {
+    "prepublish": "npm prune"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/megastor/sia-api/issues"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/megastor/sia-api"
+}
