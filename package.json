@@ -1,12 +1,13 @@
 {
   "name": "sia-api",
   "description": "SIA REST API Wrapper",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "author": {
     "name": "ASPECTRON Inc.",
     "email": "info@aspectron.com"
   },
   "dependencies": {
+    "request" : "*",
     "underscore" : "*"
   },
   "keywords": [

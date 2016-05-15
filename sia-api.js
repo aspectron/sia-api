@@ -5,7 +5,7 @@ var request = require("request");
 
 function Sia(config) {
 	var self = this;
-	var host_ = config.host;
+	var host_ = config.host;	
 
 	var defs = [
 		"get:/daemon/constants",
@@ -96,7 +96,7 @@ function Sia(config) {
 				part = parts.shift();
 			}
 			else {
-				var fn = config.rpc ? createProxyFn(method,path) : createFn(method,path,argsInPath);
+				var fn = config.rpcClient ? createProxyFn(method,path) : createFn(method,path,argsInPath);
 								
 				if(!last[part])
 					last[part] = fn;//{ }
@@ -128,12 +128,17 @@ function Sia(config) {
 				throw new Error("No callback");
 			}
 
-			config.rpc.dispatch({
+			var dispatchArgs = [{
 				op : 'sia-rpc',
 				method : method,
 				path : path,
 				args : args
-			}, callback);
+			}, callback]
+			
+			if(config.rpcUUID)
+				dispatchArgs.unshift(config.rpcUUID);
+
+			config.rpcClient.dispatch.apply(config.rpcClient, dispatchArgs);
 		}
 
 		return fn;
@@ -199,12 +204,12 @@ function Sia(config) {
 
 	// --- iris-rpc bindings
 
-	config.rpc && config.rpc.on('set-sia-host', function(op, callback) {
+	config.rpcServer && config.rpcServer.on('set-sia-host', function(op, callback) {
 		self.setSiaHost(op.host);
 		callback && callback();
 	})
 
-	config.rpc && config.rpc.on('sia-rpc', function(op, callback) {
+	config.rpcServer && config.rpcServer.on('sia-rpc', function(op, callback) {
 		if(!op.method || !op.path)
 			return callback("Missing method and path arguments");
 
@@ -213,8 +218,8 @@ function Sia(config) {
 			return callback("No such method '"+op.method+"' in path '"+op.path+"'");
 
 		var args = op.args || [ ];
-		args.push(callback);
-		fn.apply(last, args);
+		args.push(callback);		
+		fn.apply(self, args);
 	})
 
 	// --- utility functions
