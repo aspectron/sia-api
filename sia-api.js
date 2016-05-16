@@ -6,6 +6,7 @@ var request = require("request");
 function Sia(config) {
 	var self = this;
 	var host_ = config.host;	
+	var timeout_ = config.timeout || 60 * 1000;
 
 	var defs = [
 		"get:/daemon/constants",
@@ -151,7 +152,8 @@ function Sia(config) {
             json : true,
             headers : {
             	"User-Agent" : "Sia-Agent"
-            }
+            },
+            timeout : timeout_
 		}
 
 		var fn = function() {
