@@ -61,7 +61,7 @@ function Sia(config) {
 	var ARGS_IN_PATH_REQ = 1;
 	var ARGS_IN_PATH_OPT = 2;
 
-	var ifacePathMap = { }
+	self.ifacePathMap = { }
 	var iface = { }
 
 	_.each(defs, function(op) {
@@ -103,9 +103,9 @@ function Sia(config) {
 				last[part][method] = fn;
 				part = null;
 
-				if(!ifacePathMap[path])
-					ifacePathMap[path] = { }
-				ifacePathMap[path][method] = fn;
+				if(!self.ifacePathMap[path])
+					self.ifacePathMap[path] = { }
+				self.ifacePathMap[path][method] = fn;
 			}
 		}
 
@@ -114,7 +114,6 @@ function Sia(config) {
 		})
 
 	})
-
 
 	function createProxyFn(method, path) {
 
@@ -213,7 +212,7 @@ function Sia(config) {
 		if(!op.method || !op.path)
 			return callback("Missing method and path arguments");
 
-		fn = ifacePathMap[op.path][op.method];
+		fn = self.ifacePathMap[op.path][op.method];
 		if(!fn)
 			return callback("No such method '"+op.method+"' in path '"+op.path+"'");
 
