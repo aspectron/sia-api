@@ -7,6 +7,7 @@ function Sia(config) {
 	var self = this;
 	var host_ = config.host;	
 	var timeout_ = config.timeout || 60 * 1000;
+	var verbose = config.verbose || false;
 
 	var defs = [
 		"get:/daemon/constants",
@@ -185,10 +186,21 @@ function Sia(config) {
 			}
 			else {
 				options.method = "POST";
-				options.body = args.shift();
+				options.form = args.shift();
 			}
 
+			verbose && console.log('-->',options);
+
 			request(options, function(err, response, body) {
+
+				if(verbose) {
+					console.log('statusCode:', response.statusCode);
+					if(err)
+						console.log('Error:',err);
+					else
+						console.log('Response:',body);
+				}
+
 	            if(err) 
 	                return callback(err);
 
