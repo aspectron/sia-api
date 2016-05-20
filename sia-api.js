@@ -262,6 +262,9 @@ function Sia(config) {
 			if(err)
 				return callback(err);
 
+			if(!resp.hosts)
+				return callback(new Error("No hosts detected on the network"));
+
 			var price = 0
 			_.each(resp.hosts, function(h) {
 				price += parseFloat(h.price);
