@@ -8,6 +8,8 @@ function Sia(config) {
 	var host_ = config.host;	
 	var timeout_ = config.timeout || 60 * 1000;
 	var verbose = config.verbose || false;
+	
+	self.requestOptions = [ ]
 
 	var defs = [
 		"get:/daemon/constants",
@@ -161,6 +163,11 @@ function Sia(config) {
 
 			options.url = url;
 
+			while(self.requestOptions.length) {
+				var o = self.requestOptions.shift();
+				_.extend(options, o);
+			}
+
 			var args = Array.prototype.slice.apply(arguments);
 
 			var callback = args.pop();
@@ -267,7 +274,7 @@ function Sia(config) {
 
 			var price = 0
 			_.each(resp.hosts, function(h) {
-				price += parseFloat(h.price);
+				price += parseFloat(h.storageprice);
 			})
 			price /= resp.hosts.length;
 
