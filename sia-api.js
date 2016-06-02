@@ -196,6 +196,15 @@ function Sia(config) {
 				options.form = args.shift();
 			}
 
+			
+			var opts = args.pop();
+			if (opts && _.isObject(opts)){
+				if(opts.timeout)
+					options.timeout = opts.timeout;
+				if(opts.headers)
+					_.extend(options.headers, opts.headers);
+			}
+
 			verbose && console.log('-->',options);
 
 			request(options, function(err, response, body) {
