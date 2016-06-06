@@ -22,8 +22,8 @@ function Sia(config) {
 		"get:/gateway",
 		"get:/gateway/add",
 		"get:/gateway/remove",
-		"get:/host",   // !!!
-		"post:/host",  // !!!
+		"get:/host",
+		"post:/host",
 		"post:/host/announce",
 		"post:/host/delete",
 		"get:/miner",
@@ -197,12 +197,12 @@ function Sia(config) {
 			}
 
 			
-			var opts = args.pop();
-			if (opts && _.isObject(opts)){
-				if(opts.timeout)
-					options.timeout = opts.timeout;
-				if(opts.headers)
-					_.extend(options.headers, opts.headers);
+			var requestOptions = args.pop();
+			if (requestOptions && _.isObject(requestOptions)){
+				if(requestOptions.timeout)
+					options.timeout = requestOptions.timeout;
+				if(requestOptions.headers)
+					_.extend(options.headers, requestOptions.headers);
 			}
 
 			verbose && console.log('-->',options);

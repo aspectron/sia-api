@@ -1,7 +1,7 @@
 {
   "name": "sia-api",
   "description": "SIA REST API Wrapper",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "author": {
     "name": "ASPECTRON Inc.",
     "email": "info@aspectron.com"
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/megastor/sia-api"
+    "url": "git://github.com/aspectron/sia-api"
   },
   "main": "sia-api",
   "files": [
@@ -33,8 +33,8 @@
   },
   "readmeFilename": "README.md",
   "bugs": {
-    "url": "https://github.com/megastor/sia-api/issues"
+    "url": "https://github.com/aspectron/sia-api/issues"
   },
   "license": "MIT",
-  "homepage": "https://github.com/megastor/sia-api"
+  "homepage": "https://github.com/aspectron/sia-api"
 }
