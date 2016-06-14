@@ -278,14 +278,21 @@ function Sia(config) {
 
 	// --- utility functions
 
-	self.H_TO_S = function(h) { return h / 1e24; }
-	self.H_B_BLOCK_TO_S_GB_MONTH = function(h) { return h * 1e9 * 4320 / 1e24; }
-
 	self.setSiaHost = function(host) {
 		host_ = host;
 	}
 
+/*
+
+	// thise functions are deprecated
+
+	self.H_TO_S = function(h) { return h / 1e24; }
+
+	self.H_B_BLOCK_TO_S_GB_MONTH = function(h) { return h * 1e9 * 4320 / 1e24; }
+
+
 	self.getActiveHostPriceList = function(callback) {
+		console.log("sia-api: getActiveHostPriceList is deprecated and will be removed in future releases");
 		self.renter.hosts.active(function(err, resp) {
 			if(err)
 				return callback(err);
@@ -298,6 +305,7 @@ function Sia(config) {
 	}
 
 	self.getAvgActiveHostPrice = function(callback) {
+		console.log("sia-api: getActiveHostPriceList is deprecated and will be removed in future releases");
 
 		self.renter.hosts.active(function(err, resp) {
 			if(err)
@@ -315,4 +323,82 @@ function Sia(config) {
 			callback(null, self.H_B_BLOCK_TO_S_GB_MONTH(price));
 		});
 	}
+*/	
 }
+
+//
+// helper function - adds toFileSize() to a Number Object
+// Use: 
+//		toFileSize() to get GiB
+//		toFileSize(true) to get GB
+//
+Object.defineProperty(Number.prototype, 'toFileSize', {
+    value: function(a, asNumber){
+        var b,c,d;
+        var r = (
+            a=a?[1e3,'k','B']:[1024,'K','iB'],
+            b=Math,
+            c=b.log,
+            d=c(this)/c(a[0])|0,this/b.pow(a[0],d)
+        ).toFixed(2)
+
+        if(!asNumber){
+            r += ' '+(d?(a[1]+'MGTPEZY')[--d]+a[2]:'Bytes');
+        }
+        return r;
+    },
+    writable:false,
+    enumerable:false
+});
+
+//
+// helper function - adds toSia() to a Number Object
+// Use: 
+// 		toSia(2) to get 12.34 KS
+//		toSia(2,'SC') to get 1234 SC
+//		toSia(2,'SC', true) to get 1,234 SC
+//
+Object.defineProperty(Number.prototype, 'toSia', {
+    value: function(precision, suffix, c) {
+
+		var l = [
+			[1e36, 'TS'],
+			[1e33, 'GS'],
+			[1e30, 'MS'],
+			[1e27, 'KS'],
+			[1e24, 'SC'],
+			[1e21, 'mS'],
+			[1e18, 'uS'],
+			[1e15, 'nS'],
+			[1e12, 'pS'],
+			[1e9, 'H']
+		];
+
+		var i = 0;
+		if(suffix) {
+			while(i < l.length-1 && suffix != l[i][1])
+				i++;
+
+		}
+		else {
+			while(i < l.length-1 && (this) < l[i][0])
+				i++;
+			suffix = l[i][1];
+		}
+
+		var v = this / l[i][0];
+		
+		if(c) {
+			var parts = v.toFixed(precision || 2).toString().split('.');
+		    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    return parts.join('.') + ' ' + suffix;
+		}
+		else {
+			return v.toFixed(precision || 2) + ' ' + suffix;
+		}
+    },
+    writable:false,
+    enumerable:false
+});
+
+
