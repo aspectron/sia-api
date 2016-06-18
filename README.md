@@ -1,5 +1,8 @@
 # Sia API
 
+[![dependencies Status](https://david-dm.org/aspectron/sia-api.svg)](https://david-dm.org/aspectron/sia-api#info=dependencies)
+[![license:mit](https://img.shields.io/badge/license-mit-blue.svg)](https://opensource.org/licenses/MIT)
+
 NodeJs API for [Sia](http://sia.tech) - the decentralized cloud storage platform.
 
 This module converts HTTP API paths exposed by the Sia REST API to NodeJs function calls arranged in an object hierarchy.
@@ -87,4 +90,6 @@ sia.daemon.version(function(err, resp) {
 })
 
 ```
+
+Sample script listing active Sia hosts and average network pricing: https://github.com/aspectron/sia-hosts
 
