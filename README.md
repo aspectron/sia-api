@@ -17,7 +17,7 @@ This module converts HTTP API paths exposed by the Sia REST API to NodeJs functi
 Each Sia REST API call is enveloped into a function call using `request` module. API paths are converted to hierarchy of objects containing API function calls as follows:
 
 ```
-GET: /render/allowance
+GET: /renter/allowance
 
 becomes
 
