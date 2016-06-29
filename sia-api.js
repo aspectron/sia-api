@@ -36,26 +36,41 @@ function Sia(config) {
 	
 	self.requestOptions = [ ]
 
+	// https://github.com/NebulousLabs/Sia/blob/master/doc/API.md
 	var defs = [
 		"get:/daemon/constants",
 		"get:/daemon/stop",
 		"get:/daemon/version",
+
 		"get:/consensus",
+
 		"get:/explorer",
-		"get:/blocks",
-		"get:/hashes",
+		"get:/explorer/blocks/*",
+		"get:/explorer/hashes/*",
+
 		"get:/gateway",
-		"get:/gateway/add",
-		"get:/gateway/remove",
+		"post:/gateway/connect/*",
+		"post:/gateway/disconnect/*",
+
 		"get:/host",
 		"post:/host",
 		"post:/host/announce",
-		"post:/host/delete",
+		"post:/host/delete/*",
+		"get:/host/storage",
+		"post:/host/storage/folders/add",
+		"post:/host/storage/remove/add",
+		"post:/host/storage/resize/add",
+		"post:/host/storage/sectors/delete/*",
+		
+		"get:/hostdb/active",
+		"get:/hostdb/all",
+
 		"get:/miner",
 		"get:/miner/start",
 		"get:/miner/stop",
 		"get:/miner/header",
 		"post:/miner/header",
+
 		"get:/renter/allowance",
 		"post:/renter/allowance",
 		"get:/renter/downloads",
@@ -68,9 +83,7 @@ function Sia(config) {
 		"get:/renter/download/*",
 		"post:/renter/rename/*",
 		"post:/renter/upload/*",
-		"get:/renter/hosts/active",
-		"get:/renter/hosts/all",
-		"get:/transactionpool/transactions",
+
 		"get:/wallet",
 		"get:/wallet/address",
 		"get:/wallet/addresses",
