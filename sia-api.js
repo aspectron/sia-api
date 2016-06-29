@@ -245,8 +245,9 @@ function Sia(config) {
 	            if(err) 
 	                return callback(err);
 
-			    if(response.statusCode !== 200)
-			        return callback('Invalid Status Code Returned:' + response.statusCode);
+	            // accept successful response (200-206)
+			    if(response.statusCode < 200 || response.statusCode > 206)
+			        return callback('Invalid Status Code Returned: ' + response.statusCode);
 		
 			    callback(null, body);
 	        })
